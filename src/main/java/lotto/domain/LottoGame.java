@@ -1,9 +1,8 @@
 package lotto.domain;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class Lotto {
+public class LottoGame {
 
     private List<Integer> lottoWinningNumbers;
     private int lottoBonusNumber;
@@ -14,7 +13,7 @@ public class Lotto {
     private int fourthPlaceCnt = 0;
     private int fifthPlaceCnt = 0;
 
-    public Lotto() {
+    public LottoGame() {
     }
 
     public List<Integer> getLottoWinningNumbers() {
