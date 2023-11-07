@@ -1,63 +1,36 @@
 package lotto.domain;
 
-import java.util.ArrayList;
+import camp.nextstep.edu.missionutils.Randoms;
 import java.util.List;
 
-public class Lotto {
+public class LottoNumber {
 
-    private List<Integer> lottoWinningNumbers;
-    private int lottoBonusNumber;
-    private int lottoPurchaseNumber;
-    private int firstPlaceCnt = 0;
-    private int secondPlaceCnt = 0;
-    private int thirdPlaceCnt = 0;
-    private int fourthPlaceCnt = 0;
-    private int fifthPlaceCnt = 0;
+    private final List<Integer> numbers;
 
-    public Lotto() {
+    public Lotto(List<Integer> numbers) {
+        validate(numbers);
+        this.numbers = numbers;
     }
 
-    public List<Integer> getLottoWinningNumbers() {
-        return lottoWinningNumbers;
+    private void validate(List<Integer> numbers) {
+        if (numbers.size() != 6) {
+            throw new IllegalArgumentException();
+        }
     }
 
-    public int getLottoBonusNumber() {
-        return lottoBonusNumber;
+    public LottoNumber() {
     }
 
-    public int getLotteryPurchaseNumber() {
-        return lottoPurchaseNumber;
+    public List<Integer> getLottoNumbers() {
+        return lottoNumbers;
     }
 
-    public void setLottoWinningNumbers(List<Integer> lottoWinningNumbers) {
-        this.lottoWinningNumbers = lottoWinningNumbers;
+    public void setLottoNumbers(List<Integer> lottoNumbers) {
+        this.lottoNumbers = lottoNumbers;
     }
 
-    public void setLottoBonusNumber(int lottoBonusNumber) {
-        this.lottoBonusNumber = lottoBonusNumber;
+    public void setRandomLottoNumbers() {
+        this.lottoNumbers = Randoms.pickUniqueNumbersInRange(1, 45, 6);
     }
 
-    public void setLotteryPurchaseNumber(int lotteryPurchaseNumber) {
-        this.lottoPurchaseNumber = lotteryPurchaseNumber;
-    }
-
-    public void incrementFirstPlaceCnt() {
-        firstPlaceCnt++;
-    }
-
-    public void incrementSecondPlaceCnt() {
-        secondPlaceCnt++;
-    }
-
-    public void incrementThirdPlaceCnt() {
-        thirdPlaceCnt++;
-    }
-
-    public void incrementFourthPlaceCnt() {
-        fourthPlaceCnt++;
-    }
-
-    public void incrementFifthPlaceCnt() {
-        fifthPlaceCnt++;
-    }
 }
