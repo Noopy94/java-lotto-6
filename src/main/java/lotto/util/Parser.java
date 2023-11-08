@@ -1,44 +1,94 @@
-package racingcar.util;
+package lotto.util;
 
 import java.util.ArrayList;
 import java.util.List;
-import racingcar.domain.Car;
+import lotto.error.ErrorMessage;
 
 public class Parser {
 
+    public int parseLottoPurchaseNum(String input) {
 
-    public List<String> parseCarName(String input) {
+        int purchaseNum = parseInt(input);
 
-        /* 양 끝에 공백이 있는 경우에는 사용자의 실수라고 생각하여 공백을 없애고 입력한다. */
+        divideBy1000(purchaseNum);
 
-        List<String> list = new ArrayList<>();
-        String[] carNames = input.split(",");
-        for (String carName : carNames) {
-            if (carName.length() < 1 || carName.length() > 5) {
-                throw new IllegalArgumentException("적합하지 않은 차 이름입니다:  " + carName);
-            }
-            list.add(carName.trim());
-        }
+        purchaseNum /= 1000;
 
-        return list;
+        return purchaseNum;
+    }
+
+    public List<Integer> parseLottoWinningNumbers(String input) {
+
+        String[] StringWinningNumbers = input.split(",");
+        validateSize(StringWinningNumbers);
+        List<Integer> winningNumbers = parseInts(StringWinningNumbers);
+
+        return winningNumbers;
+
     }
 
 
-    public int parseAttempt(String input) {
+    public int parseLottoBonusNumber(String input, List<Integer> WinningNumbers) {
+
+        int bonusNum = parseInt(input);
+        checkNumberInRange(bonusNum);
+        checkNumberDuplicated(bonusNum, WinningNumbers);
+
+        return bonusNum;
+    }
+
+
+    public int parseInt(String input) {
         try {
-            return Integer.parseInt(input.trim());
+            int inputNum = Integer.parseInt(input);
+            return inputNum;
         } catch (NumberFormatException e) {
-            throw new IllegalArgumentException("해당 시도 횟수는 숫자로 변환될 수 없는 입력값입니다: " + input);
+            throw new IllegalArgumentException(ErrorMessage.ERROR_INPUT_IS_NOT_NUMBER.getMessage());
         }
-
     }
 
-    public List<Car> parseStringToCar(List<String> carNames) {
-        List<Car> cars = new ArrayList<>();
-        for (String carName : carNames) {
-            cars.add(new Car(carName));
+    public List<Integer> parseInts(String[] numbers) {
+
+        List<Integer> WinningNumbers = new ArrayList<>();
+        for (int i = 0; i < numbers.length; i++) {
+            try {
+                int num = Integer.parseInt(numbers[i]);
+                checkNumberDuplicated(num, WinningNumbers);
+                WinningNumbers.add(num);
+            } catch (NumberFormatException e) {
+                throw new IllegalArgumentException(ErrorMessage.ERROR_INPUT_IS_NOT_NUMBER.getMessage());
+            }
         }
-        return cars;
+
+        return WinningNumbers;
+    }
+
+    public void divideBy1000(int num) {
+        if (num % 1000 != 0) {
+            throw new IllegalArgumentException(ErrorMessage.ERROR_PURCHASE_NOT_DIVISIBLE_BY_1000.getMessage());
+        }
+    }
+
+    public void validateSize(String[] numbers) {
+        if (numbers.length != 6) {
+            throw new IllegalArgumentException(ErrorMessage.ERROR_WINNING_NUMBER_IS_NOT_SIX_NUMBERS.getMessage());
+        }
+    }
+
+
+    public void checkNumberDuplicated(int num, List<Integer> WinningNumbers) {
+
+        for (int i = 0; i < WinningNumbers.size(); i++) {
+            if (num == WinningNumbers.get(i)) {
+                throw new IllegalArgumentException(ErrorMessage.ERROR_BONUS_NUMBER_IS_NOT_DUPLICATION.getMessage());
+            }
+        }
+    }
+
+    public void checkNumberInRange(int num) {
+        if (1 > num || num > 45) {
+            throw new IllegalArgumentException(ErrorMessage.ERROR_BONUS_NUMBER_NOT_IN_RANGE.getMessage());
+        }
     }
 
 
