@@ -1,5 +1,6 @@
 package lotto.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class LottoGame {
@@ -12,6 +13,9 @@ public class LottoGame {
     private int thirdPlaceCnt = 0;
     private int fourthPlaceCnt = 0;
     private int fifthPlaceCnt = 0;
+    private Long totalPrice = 0l;
+    private Long purchasePrice = 0l;
+    private List<Lotto> lottos = new ArrayList<>();
 
     public LottoGame() {
     }
@@ -28,6 +32,10 @@ public class LottoGame {
         return lottoPurchaseNumber;
     }
 
+    public List<Lotto> getLottos() {
+        return lottos;
+    }
+
     public void setLottoWinningNumbers(List<Integer> lottoWinningNumbers) {
         this.lottoWinningNumbers = lottoWinningNumbers;
     }
@@ -38,6 +46,10 @@ public class LottoGame {
 
     public void setLotteryPurchaseNumber(int lotteryPurchaseNumber) {
         this.lottoPurchaseNumber = lotteryPurchaseNumber;
+    }
+
+    public void setPurchasePrice(Long purchasePrice) {
+        this.purchasePrice = purchasePrice;
     }
 
     public void incrementFirstPlaceCnt() {
@@ -58,5 +70,45 @@ public class LottoGame {
 
     public void incrementFifthPlaceCnt() {
         fifthPlaceCnt++;
+    }
+
+    public void incrementTotalPrice(int price) {
+        totalPrice += price;
+    }
+
+    public void saveLotto(Lotto lotto) {
+        lottos.add(lotto);
+    }
+
+    public int getFirstPlaceCnt() {
+        return firstPlaceCnt;
+    }
+
+    public int getSecondPlaceCnt() {
+        return secondPlaceCnt;
+    }
+
+    public int getThirdPlaceCnt() {
+        return thirdPlaceCnt;
+    }
+
+    public int getFourthPlaceCnt() {
+        return fourthPlaceCnt;
+    }
+
+    public int getFifthPlaceCnt() {
+        return fifthPlaceCnt;
+    }
+
+    public int getLottoPurchaseNumber() {
+        return lottoPurchaseNumber;
+    }
+
+    public Long getTotalPrice() {
+        return totalPrice;
+    }
+
+    public Long getPurchasePrice() {
+        return purchasePrice;
     }
 }

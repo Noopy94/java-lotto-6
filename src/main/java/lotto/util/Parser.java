@@ -1,5 +1,7 @@
 package lotto.util;
 
+import static lotto.error.ErrorMessage.ERROR_INPUT_IS_NOT_NUMBER;
+
 import java.util.ArrayList;
 import java.util.List;
 import lotto.error.ErrorMessage;
@@ -43,7 +45,7 @@ public class Parser {
             int inputNum = Integer.parseInt(input);
             return inputNum;
         } catch (NumberFormatException e) {
-            throw new IllegalArgumentException(ErrorMessage.ERROR_INPUT_IS_NOT_NUMBER.getMessage());
+            throw new IllegalArgumentException(ERROR_INPUT_IS_NOT_NUMBER.getMessage());
         }
     }
 
@@ -56,27 +58,27 @@ public class Parser {
                 checkNumberDuplicated(num, WinningNumbers);
                 WinningNumbers.add(num);
             } catch (NumberFormatException e) {
-                throw new IllegalArgumentException(ErrorMessage.ERROR_INPUT_IS_NOT_NUMBER.getMessage());
+                throw new IllegalArgumentException(ERROR_INPUT_IS_NOT_NUMBER.getMessage());
             }
         }
 
         return WinningNumbers;
     }
 
-    public void divideBy1000(int num) {
+    public void divideBy1000(int num) throws IllegalArgumentException {
         if (num % 1000 != 0) {
             throw new IllegalArgumentException(ErrorMessage.ERROR_PURCHASE_NOT_DIVISIBLE_BY_1000.getMessage());
         }
     }
 
-    public void validateSize(String[] numbers) {
+    public void validateSize(String[] numbers) throws IllegalArgumentException {
         if (numbers.length != 6) {
             throw new IllegalArgumentException(ErrorMessage.ERROR_WINNING_NUMBER_IS_NOT_SIX_NUMBERS.getMessage());
         }
     }
 
 
-    public void checkNumberDuplicated(int num, List<Integer> WinningNumbers) {
+    public void checkNumberDuplicated(int num, List<Integer> WinningNumbers) throws IllegalArgumentException {
 
         for (int i = 0; i < WinningNumbers.size(); i++) {
             if (num == WinningNumbers.get(i)) {
@@ -85,7 +87,7 @@ public class Parser {
         }
     }
 
-    public void checkNumberInRange(int num) {
+    public void checkNumberInRange(int num) throws IllegalArgumentException {
         if (1 > num || num > 45) {
             throw new IllegalArgumentException(ErrorMessage.ERROR_BONUS_NUMBER_NOT_IN_RANGE.getMessage());
         }
